@@ -5,18 +5,18 @@
 <script>document.documentElement.className += " js";</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#7E95AA">
-<title>Haris & Filza | Valima Invitation</title>
+<title>Syed M Haris & Filza | Valima Invitation</title>
 <meta name="description" content="You are invited to the Valima of Syed M Haris & Filza, Sunday 13 December 2026, 1:00 PM to 4:00 PM at Royal Sapphire, Gulistan-e-Johar, Karachi.">
 
-<!-- WhatsApp / social share preview. After deploying, replace haris-ka-valima with your Vercel domain -->
-<!-- WhatsApp / social share preview. Find &amp; replace haris-ka-valima.vercel.app with your real Vercel address -->
+<!-- WhatsApp / social share preview. After deploying, replace YOUR-SITE with your Vercel domain -->
+<!-- WhatsApp / social share preview. if you change the preview image, give it a new file name so WhatsApp fetches it fresh -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://haris-ka-valima.vercel.app/">
 <meta property="og:site_name" content="Haris &amp; Filza">
 <meta property="og:title" content="Haris &amp; Filza | Valima Invitation">
 <meta property="og:description" content="We'll be waiting for you! Tap to open your invitation and celebrate our Valima with us.">
-<meta property="og:image" content="https://haris-ka-valima.vercel.app/assets/share.jpg">
-<meta property="og:image:secure_url" content="https://haris-ka-valima.vercel.app/assets/share.jpg">
+<meta property="og:image" content="https://haris-ka-valima.vercel.app/assets/og-envelope.jpg?v=3">
+<meta property="og:image:secure_url" content="https://haris-ka-valima.vercel.app/assets/og-envelope.jpg?v=3">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -143,7 +143,8 @@ a{color:inherit}
 .divider i{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.85))}
 .divider i:last-child{background:linear-gradient(270deg,rgba(255,255,255,0),rgba(255,255,255,.85))}
 .divider b{width:7px;height:7px;transform:rotate(45deg);background:var(--gold-hi)}
-.scroll-cue{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom));z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;
+.scroll-cue{display:none!important}
+.scroll-cue-old{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom));z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;
   font-family:var(--caps);font-size:10px;letter-spacing:.3em;color:#fff;text-shadow:0 1px 8px rgba(30,50,80,.5)}
 .scroll-cue svg{animation:nudge 1.8s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(5px)}}
@@ -198,6 +199,24 @@ a{color:inherit}
   background:radial-gradient(circle,rgba(255,255,255,.95) 0 30%,rgba(255,255,255,.35) 31% 60%,rgba(255,255,255,0) 62%);
   box-shadow:0 0 0 2px rgba(255,255,255,.55);animation:hintpath 2.6s ease-in-out infinite}
 .sc-hint.off{display:none!important}
+.sc-hint .finger{position:absolute;left:-3px;top:9px;width:46px;height:46px;filter:drop-shadow(0 4px 6px rgba(20,35,55,.45))}
+.sc-urdu-hint{font-size:18px;color:var(--slate);margin-top:2px}
+
+/* big swipe-up guide shown on the hero until the guest scrolls */
+#swipeHint{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:75;pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 22px 8px;border-radius:22px;text-align:center;color:#fff;
+  background:rgba(14,24,40,.42);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.45);
+  box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s .6s;width:max-content;max-width:calc(100% - 32px)}
+#swipeHint.show{opacity:1;visibility:visible;transition:opacity .6s ease}
+#swipeHint.solid{background:rgba(38,58,84,.88)}   /* stronger pill on the light Save the Date page */
+#swipeHint .hand{position:relative;width:44px;height:58px}
+#swipeHint .hand svg{position:absolute;left:4px;top:14px;width:36px;height:36px;animation:swipeUp 1.6s ease-in-out infinite;filter:drop-shadow(0 3px 5px rgba(0,0,0,.35))}
+#swipeHint .hand i{position:absolute;left:50%;top:6px;width:2px;height:30px;margin-left:-1px;border-radius:2px;
+  background:linear-gradient(to top,rgba(255,255,255,0),rgba(255,255,255,.9));animation:trail 1.6s ease-in-out infinite}
+@keyframes swipeUp{0%{transform:translateY(14px);opacity:0}20%{opacity:1}70%{transform:translateY(-12px);opacity:1}100%{transform:translateY(-16px);opacity:0}}
+@keyframes trail{0%,15%{opacity:0;transform:scaleY(.2);transform-origin:bottom}60%{opacity:1;transform:scaleY(1)}100%{opacity:0}}
+#swipeHint b{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:.02em}
+#swipeHint .urdu{font-size:16px;line-height:1.9;opacity:.95}
 @keyframes hintpath{0%{transform:translate(70px,90px);opacity:0}10%{opacity:1}35%{transform:translate(230px,110px)}60%{transform:translate(90px,170px)}85%{transform:translate(230px,190px);opacity:1}100%{transform:translate(230px,190px);opacity:0}}
 .sc-after{font-style:italic;font-size:19px;color:var(--slate);margin-top:22px;min-height:1.4em}
 .sc-after .cue{display:block;margin-top:10px;font-family:var(--caps);font-style:normal;font-size:11px;letter-spacing:.22em;color:var(--dusty)}
@@ -376,6 +395,11 @@ a{color:inherit}
   <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
   <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M17 9l5 6M22 9l-5 6"/></svg>
 </button>
+<div id="swipeHint" aria-hidden="true">
+  <span class="hand"><i></i><svg viewBox="0 0 24 24" fill="#fff" stroke="rgba(30,45,65,.55)" stroke-width="1.1" stroke-linejoin="round"><path d="M9.2 13.2V5.4a1.6 1.6 0 0 1 3.2 0v5.4l.1-1.1a1.5 1.5 0 0 1 3 .2v1.2l.1-.6a1.5 1.5 0 0 1 3 .3v1.3l.1-.3a1.4 1.4 0 0 1 2.7.6v3.2a6.7 6.7 0 0 1-6.7 6.7h-1.3a6.4 6.4 0 0 1-5.2-2.7l-3.3-4.6a1.6 1.6 0 0 1 2.4-2.1z"/></svg></span>
+  <b>Swipe up to continue</b>
+  <span class="urdu" lang="ur">آگے دیکھنے کے لیے اوپر سوائپ کریں</span>
+</div>
 <canvas id="petals" aria-hidden="true"></canvas>
 <canvas id="popper" aria-hidden="true"></canvas>
 
@@ -398,6 +422,7 @@ a{color:inherit}
   <section class="savedate" id="savedate">
     <h2 class="sec-title rv">Save the Date</h2>
     <p class="sec-sub rv">Scratch the card to reveal our special day</p>
+    <p class="urdu sc-urdu-hint rv" lang="ur">تاریخ دیکھنے کے لیے کارڈ کو انگلی سے کھرچیں</p>
     <div class="scratch" id="scratchWrap">
       <div class="sc-under">
         <span class="sc-dow">SUNDAY</span>
@@ -408,7 +433,7 @@ a{color:inherit}
       </div>
       <div class="sc-shine" id="scShine"></div>
       <canvas id="scratch" tabindex="0" aria-label="Scratch card hiding the date. Press Enter to reveal it."></canvas>
-      <span class="sc-hint" id="scHint"></span>
+      <span class="sc-hint" id="scHint"><span class="finger"><svg viewBox="0 0 24 24" fill="#fff" stroke="rgba(30,45,65,.55)" stroke-width="1.1" stroke-linejoin="round"><path d="M9.2 13.2V5.4a1.6 1.6 0 0 1 3.2 0v5.4l.1-1.1a1.5 1.5 0 0 1 3 .2v1.2l.1-.6a1.5 1.5 0 0 1 3 .3v1.3l.1-.3a1.4 1.4 0 0 1 2.7.6v3.2a6.7 6.7 0 0 1-6.7 6.7h-1.3a6.4 6.4 0 0 1-5.2-2.7l-3.3-4.6a1.6 1.6 0 0 1 2.4-2.1z"/></svg></span></span>
     </div>
     <p class="sc-after" id="scAfter">Scratch the card to open the rest of the invitation</p>
   </section>
@@ -892,8 +917,14 @@ function openInvite() {
         .to("#scratchWrap", { keyframes: [{ x: -6, rotation: -1 }, { x: 6, rotation: 1 }, { x: -4, rotation: -.6 }, { x: 4, rotation: .6 }, { x: 0, rotation: 0 }], duration: .42, ease: "none" })
         .add(function () { popper($("#scratchWrap").getBoundingClientRect()); });
     } else popper($("#scratchWrap").getBoundingClientRect());
-    $("#scAfter").innerHTML = 'See you there, in sha Allah<span class="cue">SCROLL FOR THE COUNTDOWN' +
-      '<svg width="14" height="9" viewBox="0 0 14 9"><path d="M1 1l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>';
+    $("#scAfter").innerHTML = 'See you there, in sha Allah';
+    // 3s after the reveal, show the same swipe-up hand until the guest scrolls on
+    setTimeout(function () {
+      var y0 = window.pageYOffset, hint = $("#swipeHint");
+      hint.classList.add("solid", "show");
+      function off() { if (Math.abs(window.pageYOffset - y0) > 40) { hint.classList.remove("show"); window.removeEventListener("scroll", off); } }
+      window.addEventListener("scroll", off, { passive: true });
+    }, 3000);
     $("#countdown").classList.remove("is-locked");
     document.body.classList.remove("gated");
     if (typeof playVoice === "function") playVoice();
@@ -1017,13 +1048,46 @@ function openInvite() {
     var env = $("#envelope"); env.classList.add("done");
     document.body.classList.remove("locked");
     ScrollTrigger.refresh();
+    startGuide();
+  }
+
+  /* ---- guide for guests who don't know to scroll ----
+     2s after the photo appears: a big "swipe up" hint (English + Urdu).
+     If nobody touches the screen for 6s, the page plays the walk by itself like a video
+     and stops at Save the Date. Any touch hands control straight back to the guest. */
+  var guideDone = false, autoTw = null, hintTimer = null, idleTimer = null;
+  var USER_EVENTS = ["touchstart", "wheel", "keydown", "mousedown"];
+  function onUser(e) {
+    if (e && e.target && e.target.closest && e.target.closest("#music")) return;   // tapping mute isn't "scrolling"
+    endGuide();
+  }
+  function endGuide() {
+    if (guideDone) return; guideDone = true;
+    clearTimeout(hintTimer); clearTimeout(idleTimer);
+    if (autoTw) { autoTw.kill(); autoTw = null; }
+    $("#swipeHint").classList.remove("show");
+    USER_EVENTS.forEach(function (ev) { window.removeEventListener(ev, onUser); });
+  }
+  function startGuide() {
+    if (guideDone) return;
+    USER_EVENTS.forEach(function (ev) { window.addEventListener(ev, onUser, { passive: true }); });
+    hintTimer = setTimeout(function () { if (!guideDone) $("#swipeHint").classList.add("show"); }, 2000);
+    idleTimer = setTimeout(autoPlay, 6000);
+  }
+  function autoPlay() {
+    if (guideDone || RM) return;
+    $("#swipeHint").classList.remove("show");
+    var target = $("#savedate").getBoundingClientRect().top + window.pageYOffset, pos = { y: window.pageYOffset };
+    autoTw = gsap.to(pos, { y: target, duration: 9, ease: "sine.inOut",
+      onUpdate: function () { window.scrollTo(0, pos.y); },
+      onComplete: function () { autoTw = null; endGuide(); } });
   }
 
   function heroIn() {
     if (RM) return;
     gsap.timeline()
       .to("#heroImg", { opacity: 1, duration: .9, ease: "power1.out" }, 0)
-      .to(".scroll-cue", { opacity: 1, y: 0, duration: .8 }, 1.1);
+      .to(".hero-kicker", { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, .5);   // first line appears on its own
   }
 
   if (RM) return;
@@ -1035,7 +1099,6 @@ function openInvite() {
     .to(walkState, { f: WALK_N - 1, ease: "none", duration: 1, onUpdate: function () { drawWalk(walkState.f); } }, 0)
     .fromTo(".scroll-cue", { autoAlpha: 1 }, { autoAlpha: 0, ease: "none", duration: .1, immediateRender: false }, 0)
     // the names write themselves in while the couple walks (and un-write when scrolling back up)
-    .fromTo(".hero-kicker", { opacity: 0, y: 14 }, { opacity: 1, y: 0, ease: "power1.out", duration: .18, immediateRender: false }, .12)
     .fromTo(heroChars, { opacity: 0, y: 26, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, ease: "back.out(1.4)", duration: .2, stagger: .025, immediateRender: false }, .22)
     .fromTo(".divider.h-in", { opacity: 0, y: 14 }, { opacity: 1, y: 0, ease: "none", duration: .12, immediateRender: false }, .72)
     .fromTo(".divider i", { scaleX: 0 }, { scaleX: 1, ease: "power2.out", duration: .18, immediateRender: false }, .72);
