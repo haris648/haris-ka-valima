@@ -343,7 +343,6 @@ a{color:inherit}
     margin-top: 8px;
     text-align: center;
 }
-
 /* =========================================================
    CLOSING
    ========================================================= */
@@ -1053,20 +1052,26 @@ function openInvite() {
       // 4. the envelope dissolves into the hero
       .set("#envBlack", { opacity: 0 }, 2.8)
       .add(heroIn, 2.8)
+      .add(unlock, 3.0)   // page starts playing as soon as the photo shows
       .add(function () { startPetals(); }, 3.0)
       .to(env, { opacity: 0, duration: 1.4, ease: "power1.inOut" }, 2.8);
   };
-  function finish() {
-    var env = $("#envelope"); env.classList.add("done");
+  var unlocked = false;
+  function unlock() {
+    if (unlocked) return; unlocked = true;
     document.body.classList.remove("locked");
     ScrollTrigger.refresh();
     startGuide();
   }
+  function finish() {
+    var env = $("#envelope"); env.classList.add("done");
+    unlock();
+  }
 
-  /* ---- guide for guests who don't know to scroll ----
-     2s after the photo appears: a big "swipe up" hint (English + Urdu).
-     If nobody touches the screen for 6s, the page plays the walk by itself like a video
-     and stops at Save the Date. Any touch hands control straight back to the guest. */
+  /* ---- hero plays itself like a video ----
+     Shortly after the photo and first line appear, the page scrolls slowly on its own:
+     the couple walks in, the names write themselves, and it settles on Save the Date.
+     No hand hint here. Any touch or scroll hands control straight back to the guest. */
   var guideDone = false, autoTw = null, hintTimer = null, idleTimer = null;
   var USER_EVENTS = ["touchstart", "wheel", "keydown", "mousedown"];
   function onUser(e) {
@@ -1083,23 +1088,24 @@ function openInvite() {
   function startGuide() {
     if (guideDone) return;
     USER_EVENTS.forEach(function (ev) { window.addEventListener(ev, onUser, { passive: true }); });
-    hintTimer = setTimeout(function () { if (!guideDone) $("#swipeHint").classList.add("show"); }, 2000);
-    idleTimer = setTimeout(autoPlay, 6000);
+    idleTimer = setTimeout(autoPlay, 0);
   }
   function autoPlay() {
     if (guideDone || RM) return;
     $("#swipeHint").classList.remove("show");
     var target = $("#savedate").getBoundingClientRect().top + window.pageYOffset, pos = { y: window.pageYOffset };
-    autoTw = gsap.to(pos, { y: target, duration: 9, ease: "sine.inOut",
-      onUpdate: function () { window.scrollTo(0, pos.y); },
-      onComplete: function () { autoTw = null; endGuide(); } });
+    var SPEED = 130;                       // px per second: lower = slower walk
+    var settle = Math.min(220, target - pos.y), mid = target - settle;
+    var up = function () { window.scrollTo(0, pos.y); };
+    autoTw = gsap.timeline({ onComplete: function () { autoTw = null; endGuide(); } })
+      .to(pos, { y: mid, duration: Math.max(0, mid - pos.y) / SPEED, ease: "none", onUpdate: up })                 // steady, like a video
+      .to(pos, { y: target, duration: 2 * settle / SPEED, ease: "power1.out", onUpdate: up });                    // glides to a stop on Save the Date
   }
 
   function heroIn() {
     if (RM) return;
     gsap.timeline()
-      .to("#heroImg", { opacity: 1, duration: .9, ease: "power1.out" }, 0)
-      .to(".hero-kicker", { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, .5);   // first line appears on its own
+      .to("#heroImg", { opacity: 1, duration: .9, ease: "power1.out" }, 0);
   }
 
   if (RM) return;
@@ -1110,6 +1116,8 @@ function openInvite() {
   gsap.timeline({ scrollTrigger: { trigger: "#hero", start: "top top", end: "+=170%", pin: true, scrub: .6, anticipatePin: 1 } })
     .to(walkState, { f: WALK_N - 1, ease: "none", duration: 1, onUpdate: function () { drawWalk(walkState.f); } }, 0)
     .fromTo(".scroll-cue", { autoAlpha: 1 }, { autoAlpha: 0, ease: "none", duration: .1, immediateRender: false }, 0)
+    // "The Valima of" fades in first, then the names follow
+    .fromTo(".hero-kicker", { opacity: 0, y: 14 }, { opacity: 1, y: 0, ease: "power1.out", duration: .12, immediateRender: false }, .02)
     // the names write themselves in while the couple walks (and un-write when scrolling back up)
     .fromTo(heroChars, { opacity: 0, y: 26, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, ease: "back.out(1.4)", duration: .2, stagger: .025, immediateRender: false }, .22)
     .fromTo(".divider.h-in", { opacity: 0, y: 14 }, { opacity: 1, y: 0, ease: "none", duration: .12, immediateRender: false }, .72)
